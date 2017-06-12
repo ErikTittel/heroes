@@ -13,10 +13,7 @@ import { HeroService } from './hero.service';
   styleUrls: ['./hero-detail.component.css']
 })
 export class HeroDetailComponent implements OnInit {
-  hero: Hero = {
-    id: 31,
-    name: 'John'
-  };
+  hero: Hero;
 
   constructor(
     private heroService: HeroService,
@@ -28,6 +25,11 @@ export class HeroDetailComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.heroService.getHero(+params['id']))
       .subscribe(hero => this.hero = hero);
+  }
+
+  save(): void {
+    this.heroService.update(this.hero)
+      .then(() => this.goBack());
   }
 
   goBack(): void {
